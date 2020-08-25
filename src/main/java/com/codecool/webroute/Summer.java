@@ -1,5 +1,7 @@
 package com.codecool.webroute;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedArrayType;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -8,7 +10,7 @@ import java.util.Map;
 public class Summer {
     final Map<String, Method> handlerMethods;
 
-    private String pathString;
+    private Field pathString;
 
     public Summer() {
         handlerMethods = new HashMap<>();
@@ -22,15 +24,14 @@ public class Summer {
     public void registerHandlers(Class<?>... handlerClasses) {
         try {
             for (Class<?> singleClass : handlerClasses) {
-                Field field = singleClass.getDeclaredField("pathString");
                 for (Method method : singleClass.getMethods()) {
-                    if (method.isAnnotationPresent(webRoute.class)) {
-                        webRoute annotations = field.getAnnotation(webRoute.class);
-                        this.handlerMethods.put(annotations.path(), method);
+                    if (method.isAnnotationPresent(WebRoute.class)) {
+                        WebRoute annotation = method.getAnnotation(WebRoute.class);
+                        this.handlerMethods.put(annotation.path(), method);
                     }
                 }
             }
-        } catch (SecurityException | NoSuchFieldException e) {
+        } catch (SecurityException e) {
             e.printStackTrace();
         }
     }

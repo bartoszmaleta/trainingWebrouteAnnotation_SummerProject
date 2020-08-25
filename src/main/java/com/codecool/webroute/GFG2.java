@@ -11,7 +11,6 @@ public class GFG2 {
     // initialize field with
     // default value in annotation
     @annotations(path = "qwe")
-
     private String text;
 
     public static void main(String[] args)
