@@ -2,10 +2,12 @@ package com.codecool.webroute;
 
 public class ExampleHandler {
 
+    @webRoute(path = "/hello")
     public static String getHello() {
         return "Hello World!";
     }
 
+    @webRoute(path = "/lorem")
     public static String getLoremIpsum() {
         return "<h1>What is Lorem Ipsum?</h1></br>" +
                "<p><i>Lorem Ipsum</i> is simply dummy text of the printing and typesetting industry.</p>" +
@@ -13,6 +15,7 @@ public class ExampleHandler {
                "</br>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
     }
 
+    @webRoute(path = "testMethod")
     public static String methodThatShouldNotBeAnValidEndpoint() {
         return "Imagine that this is just a helper method :)";
     }
