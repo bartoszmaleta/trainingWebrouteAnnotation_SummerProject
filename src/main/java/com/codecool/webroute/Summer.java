@@ -1,16 +1,18 @@
 package com.codecool.webroute;
 
+import com.sun.net.httpserver.HttpServer;
+
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedArrayType;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Summer {
     final Map<String, Method> handlerMethods;
-
-    private Field pathString;
 
     public Summer() {
         handlerMethods = new HashMap<>();
@@ -31,6 +33,9 @@ public class Summer {
                     }
                 }
             }
+            System.out.println("value for key lorem = " + this.handlerMethods.get("/lorem"));
+//                    System.out.println(this.handlerMethods.toString());
+            System.out.println("\nkeySet = " + this.handlerMethods.keySet());
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -39,7 +44,15 @@ public class Summer {
     /**
      * Starts HTTP server, waits for HTTP requests and redirects them to one of registered handler methods.
      */
-    public void run() {
-        // TODO
+    public void run() throws IOException {
+
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8080), 0);
+        HttpRequestHandler httpRequestHandler = new HttpRequestHandler(this.handlerMethods);
+
+        httpServer.createContext("/", httpRequestHandler);
+        httpServer.setExecutor(null);
+        httpServer.start();
+        System.out.println("Server has started on port " + httpServer.getAddress().getPort());
+
     }
 }

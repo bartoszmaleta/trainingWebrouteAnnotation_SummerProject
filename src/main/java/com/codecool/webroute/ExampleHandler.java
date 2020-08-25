@@ -15,8 +15,9 @@ public class ExampleHandler {
                "</br>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
     }
 
-    @WebRoute(path = "testMethod")
+    @WebRoute(path = "/testMethod")
     public static String methodThatShouldNotBeAnValidEndpoint() {
-        return "Imagine that this is just a helper method :)";
+//        return "Imagine that this is just a helper method :)";
+        throw new RuntimeException("qweqweqweqw");
     }
 }
